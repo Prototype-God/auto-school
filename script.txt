@@ -1,0 +1,107 @@
+
+DROP DATABASE IF EXISTS School;
+
+CREATE DATABASE School CHARACTER SET 'utf8';
+
+USE School;
+
+--
+-- Création des tables :
+--
+
+CREATE TABLE Student (
+	stu_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	stu_nom VARCHAR(30) NOT NULL,
+	stu_prenom VARCHAR(30) NOT NULL,
+	stu_age INT,
+	stu_sexe CHAR(1),
+	stu_psd INT,
+	stu_dure INT,
+	PRIMARY KEY (stu_id)
+)
+ENGINE=INNODB;
+
+
+CREATE TABLE Car (
+	car_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	car_nom VARCHAR(30) NOT NULL,
+	PRIMARY KEY (car_id)
+)
+ENGINE=INNODB;
+
+
+CREATE TABLE Monitor (
+	mon_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	mon_psd INT,
+	PRIMARY KEY (mon_id)
+)
+ENGINE=INNODB;
+
+
+CREATE TABLE Teacher (
+	tea_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	tea_nom VARCHAR(30) NOT NULL,
+	tea_prenom VARCHAR(30) NOT NULL,
+	tea_psd INT,
+    primary key (tea_id)
+)
+ENGINE=INNODB;
+
+
+CREATE TABLE Cour (
+	cour_id  INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	cour_name VARCHAR(30) NOT NULL,
+	cour_dure INT,
+	cour_date DATE,
+    	cour_time TIME,
+   	cour_student VARCHAR(30)NOT NULL,
+	cour_teacher VARCHAR(30)NOT NULL,
+	cour_voiture VARCHAR(30)NOT NULL,	
+	PRIMARY KEY (cour_id)
+)
+ENGINE=INNODB;
+
+CREATE TABLE C_T_S (
+	id_cour INT,
+	id_teacher INT,
+	id_student INT
+)
+ENGINE=INNODB;
+
+--
+-- Insertion de valeurs dans les tables :
+--
+
+
+
+
+INSERT INTO Car	
+VALUES	(1, '20th Century Fox'),
+	(2, 'United Artists'),
+	(3, 'Paramount Pictures'),
+	(4, 'Studio Ghibli'),
+	(5, 'Warner Bros'),
+	(6, 'Pathé');
+
+
+
+INSERT INTO Monitor
+VALUES	(1, '123456');
+	
+
+	
+
+INSERT INTO Teacher
+VALUES	(1, 'CABOT','CABOT','123456');
+
+
+INSERT INTO Cour
+VALUES	(1, 'drive',2,20231008,05530,1,2,3)
+
+
+
+-- 
+-- Requêtes :
+--
+
+

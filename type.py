@@ -39,11 +39,12 @@ class Teacher():
     def __init__(self, id, psd):
         self.psd = psd
         self.id = int(id)
-        self.prenom = str(prenom)
     def afficher_cour(self):
-        cur.execute("Select * from Cour Where cour_teacher = ('%s')+('%s')" % (self.nom),(self.prenom))
+        cur.execute("Select tea_nom,tea_prenom from Student Where tea_id = (%d)" % (self.id))
         row1 = cur.fetchone()
-        print(row1)
+        cur.execute("Select * from Cour Where cour_teacher = ('%s')+('%s')" % (row1[0],row1[1]))
+        row2 = cur.fetchone()
+        print(row2)
     def modifier(self):
         psd1 = int(input('Write your old password:'))
         psd2 = int(input('Write your new password:'))
@@ -54,13 +55,15 @@ class Teacher():
         else:
             print('votre password ne est correct.')
     def ajouter_cour(self):
+            cur.execute("Select tea_nom,tea_prenom from Student Where tea_id = (%d)" % (self.id))
+            row1 = cur.fetchone()
             id = int(input('Write id de eleve:'))
             dure = int(input('Write dure de cour:'))
             nom = str(input('Write name de cour:'))
             date = int(input('Write starttime(exemple:AAAAMMDD):'))
             time = int(input('Write starttime(exemple:HHMMSS):'))
             eleve = str(input('Write NOM+Prenom de eleve:'))
-            prof = self.nom+self.prenom
+            prof = row1[0]+row1[1]
             car = str(input('Write nom de car:'))
             cur.execute("INSERT INTO Cour VALUES (%d,'%s',%d,%d,%d,'%s','%s','%s')" % (id,nom,dure,date,time,eleve,prof,car))
             db.commit()

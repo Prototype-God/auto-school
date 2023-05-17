@@ -13,34 +13,32 @@ else:
 
 
 class Student():
-    def __init__(self, id, nom, prenom, age, heure, psd):
+    def __init__(self, id,psd):
         self.id = id
-        self.nom = str(nom)
-        self.prenom = str(prenom)
-        self.age = int(age)
-        self.heure = int(heure)
         self.psd = psd
     def afficher(self):
-        cur.execute("Select stu_id,stu_nom,stu_prenom,stu_age,stu_heure from Student  Where stu_id =  (%d)" % (self.id))
+        cur.execute("Select stu_id,stu_nom,stu_prenom,stu_age,stu_dure from Student  Where stu_id =  (%d)" % (self.id))
+        row1 = cur.fetchone()
+        print('id:',row1[0],'NOM:',row1[1],'Prenom:',row1[2],'age:',row1[3],'heure de conduire:',row1[4])
     def modifier(self):
         psd1 = int(input('Write your old password :'))
         psd2 = int(input('Write your new password:'))
-        cur.execute("Select stu_psd from Student Where sut_id = (%d)" %(self.id))
+        cur.execute("Select stu_psd from Student Where stu_id = (%d)" %(self.id))
         row1 = cur.fetchone()
         if row1[0] ==psd1:
-            cur.execute("UPDATE  Student Set stu_psd =(%d) WHERE stu_psd = (%d)" % (psd2))
+            cur.execute("UPDATE  Student Set stu_psd =(%d) WHERE stu_psd = (%d)" % (psd2,(self.id)))
         else:
             print('votre password ne est correct.')
     def afficher_cour(self):
-        cur.execute("Select * from Cour Where cour_student = ('%s')+('%s')" % (self.nom),(self.prenom))
+        cur.execute("Select stu_nom,stu_prenom from Student Where stu_id = (%d)" % (self.id))
+        row1 = cur.fetchone()
+        cur.execute("Select * from Cour Where cour_student = ('%s')+('%s')" % (row1[0],row1[1]))
         row1 = cur.fetchone()
         print(row1)
 class Teacher():
-    def __init__(self, id, nom, prenom, sexe, psd):
+    def __init__(self, id, psd):
         self.psd = psd
         self.id = int(id)
-        self.nom = str(nom)
-        self.sexe = str(sexe)
         self.prenom = str(prenom)
     def afficher_cour(self):
         cur.execute("Select * from Cour Where cour_teacher = ('%s')+('%s')" % (self.nom),(self.prenom))
@@ -245,8 +243,5 @@ class Monitor():
                 time = int(input('Write time de ce cour(exemple:HHMMSS):'))
                 dure = int(input('Renouvelle dure de ce cour:'))
                 cur.execute("UPDATE  Cour Set cour_dure =('%s') Where cour_name = ('%s') AND cour_date = (%d) AND cour_time = (%d) " % (dure, name, date, time))
-monitor1 = Monitor(1234, 1234)
-
-monitor1.modifier()
-monitor1.afficher()
+monitor1 = Monitor(99999, 99999)
 
